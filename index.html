@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Church Management System</title>
 <style>
-:root{--p1:#6d28d9;--p2:#ec4899;--acc:#fbbf24;--bg:#f6f0ff;--card:#fff;--ink:#1c2340;--muted:#6f7897;--line:#eadff8}
+:root{--p1:#1e1b4b;--p2:#4338ca;--acc:#f5b301;--bg:#f4f6fb;--card:#fff;--ink:#1c2340;--muted:#6f7897;--line:#e3e7f3}
 *{box-sizing:border-box;margin:0}
 html,body{height:100%}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--ink)}
-.top{position:fixed;top:0;left:0;right:0;height:56px;z-index:20;background:linear-gradient(120deg,var(--p1),var(--p2));color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;box-shadow:0 4px 18px #0003}
+.top{position:fixed;top:0;left:0;right:0;height:var(--th,56px);z-index:20;background:linear-gradient(120deg,var(--p1),var(--p2));color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;box-shadow:0 4px 18px #0003}
 .top h1{font-size:1.05rem;display:flex;align-items:center;gap:10px}.bg{display:none;background:#ffffff30;border:0;color:#fff;border-radius:10px;width:38px;height:38px;font-size:1.2rem;cursor:pointer}
 .uc{display:flex;align-items:center;gap:8px;font-size:.85rem}.uc button{background:#ffffff30;border:0;color:#fff;border-radius:10px;padding:7px 12px;font-weight:700;cursor:pointer}
-.side{position:fixed;top:56px;left:0;bottom:34px;width:220px;background:var(--card);box-shadow:4px 0 20px #0001;overflow:auto;padding:10px;z-index:15;transition:transform .25s}
+.side{position:fixed;top:var(--th,56px);left:0;bottom:34px;width:220px;background:var(--card);box-shadow:4px 0 20px #0001;overflow:auto;padding:10px;z-index:15;transition:transform .25s}
 .side button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:transparent;color:var(--ink);padding:11px 12px;border-radius:12px;font-weight:600;font-size:.95rem;cursor:pointer;text-align:left;margin-bottom:2px}
 .side button:hover{background:var(--line)}.side button.on{background:linear-gradient(120deg,var(--p1),var(--p2));color:#fff}
-.main{margin-left:220px;padding:70px 16px 54px;max-width:1100px}
+.main{margin-left:220px;padding:calc(var(--th,56px) + 14px) 16px 54px;max-width:1100px}
 .mq{position:fixed;left:0;right:0;bottom:0;height:34px;background:#0b1020;color:#fff;overflow:hidden;z-index:30;display:flex;align-items:center}
 .mt{display:inline-block;white-space:nowrap;padding-left:100%;animation:mq 24s linear infinite;font-weight:700;font-size:.88rem;letter-spacing:.5px}.mt b{color:var(--acc)}.mq:hover .mt{animation-play-state:paused}
 @keyframes mq{to{transform:translateX(-100%)}}
@@ -23,7 +23,7 @@ h2.pt{font-size:1.35rem;margin-bottom:12px}
 .card{background:var(--card);border-radius:18px;padding:16px;box-shadow:0 8px 24px #0000000d;margin-bottom:14px}
 .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:14px}
 .stat{background:var(--card);border-radius:18px;padding:14px;box-shadow:0 8px 24px #0000000d;border-top:4px solid var(--c,var(--p1))}.stat span{font-size:.78rem;color:var(--muted);font-weight:700}.stat b{display:block;font-size:1.6rem;margin-top:3px}
-.g2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))}
 .row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;align-items:flex-end}.row>*{flex:1;min-width:130px}
 label{font-size:.74rem;font-weight:700;color:var(--muted);display:block;margin-bottom:3px}
 input,select,textarea{padding:10px 12px;border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font-size:.95rem;outline:none;width:100%;font-family:inherit}
@@ -34,7 +34,7 @@ table{width:100%;border-collapse:collapse}th{text-align:left;font-size:.72rem;te
 .sc{overflow-x:auto}
 .pill{font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:99px;background:var(--line);color:var(--muted);display:inline-block}.pill.ok{background:#10b98122;color:#0b8a63}.pill.bad{background:#ef444422;color:#dc2626}.pill.wn{background:#f59e0b2a;color:#a96b00}.pill.in{background:#3b82f622;color:#2563eb}
 .bar{height:12px;background:var(--line);border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--p1),var(--p2));border-radius:99px}
-.bl{display:grid;grid-template-columns:96px 1fr 70px;gap:10px;align-items:center;margin:9px 0;font-size:.88rem}.bl b{text-align:right}
+.bl{display:grid;grid-template-columns:96px 1fr auto;gap:10px;align-items:center;margin:9px 0;font-size:.88rem}.bl b{text-align:right}
 .cols{display:flex;gap:8px;align-items:flex-end;height:150px;margin-top:8px}.cols div{flex:1;text-align:center;font-size:.7rem;color:var(--muted);font-weight:700}.cols i{display:block;border-radius:8px 8px 0 0;background:linear-gradient(180deg,var(--p2),var(--p1));min-height:4px;margin-bottom:4px}.cols u{display:block;text-decoration:none;color:var(--ink);font-size:.72rem}
 .empty{text-align:center;color:var(--muted);padding:26px}
 .li{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.92rem;align-items:center}.li small{color:var(--muted);display:block}
@@ -47,8 +47,22 @@ dialog{border:0;border-radius:20px;padding:0;width:min(520px,94vw);max-height:92
 #toast{position:fixed;bottom:48px;left:50%;transform:translate(-50%,80px);background:#111827;color:#fff;padding:11px 20px;border-radius:99px;transition:.3s;opacity:0;z-index:50;max-width:90%;text-align:center}#toast.show{transform:translate(-50%,0);opacity:1}
 #pr{display:none}
 @media(max-width:900px){.bg{display:block}.side{transform:translateX(-105%)}.side.open{transform:none}.main{margin-left:0}.uc span{display:none}.top h1{font-size:.95rem}}
-@media(max-width:640px){table.rt thead{display:none}table.rt tr,table.rt td{display:block}table.rt tr{border:1px solid var(--line);border-radius:14px;padding:6px 12px;margin-bottom:10px}table.rt td{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border:0;gap:10px;text-align:right}table.rt td[data-l]::before{content:attr(data-l);color:var(--muted);font-size:.7rem;font-weight:700;text-transform:uppercase;text-align:left}.row>*{min-width:100%}.main{padding:70px 10px 54px}.bl{grid-template-columns:76px 1fr 56px}}
+@media(max-width:640px){table.rt thead{display:none}table.rt tr,table.rt td{display:block}table.rt tr{border:1px solid var(--line);border-radius:14px;padding:6px 12px;margin-bottom:10px}table.rt td{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border:0;gap:10px;text-align:right}table.rt td[data-l]::before{content:attr(data-l);color:var(--muted);font-size:.7rem;font-weight:700;text-transform:uppercase;text-align:left}.row>*{min-width:100%}.main{padding:calc(var(--th,56px) + 14px) 10px 54px}.bl{grid-template-columns:72px 1fr auto;gap:8px;font-size:.8rem}.bl span{overflow:hidden;text-overflow:ellipsis}}
 @media print{body>*:not(#pr){display:none!important}#pr{display:block!important;color:#000;background:#fff;padding:20px}#pr table{font-size:13px}.noprint{display:none!important}}
+
+body.big{--th:96px}
+.top.big{padding:0 20px;border-bottom:4px solid var(--acc);overflow:hidden;background:linear-gradient(115deg,var(--p1) 0%,var(--p2) 100%)}
+.top.big::after{content:'';position:absolute;right:150px;top:-8px;bottom:-8px;width:130px;opacity:.1;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 32'%3E%3Cpath d='M9 0h6v10h9v6h-9v16H9V16H0v-6h9z' fill='white'/%3E%3C/svg%3E") center/contain no-repeat;pointer-events:none}
+.tl{display:flex;align-items:center;gap:14px;min-width:0;position:relative;z-index:1}.top.big .uc{position:relative;z-index:1}
+.logo{width:68px;height:68px;border-radius:18px;background:#ffffff1f;border:2px dashed #ffffff88;display:grid;place-items:center;color:#ffffffd0;font-size:.62rem;font-weight:800;letter-spacing:1.5px;flex:none;overflow:hidden;text-align:center;line-height:1.25}
+.logo.has{border:2px solid #fff;background:#fff}.logo img{width:100%;height:100%;object-fit:contain}
+.tt{min-width:0}.tt h1{font-size:1.65rem;font-weight:800;letter-spacing:.3px;line-height:1.1;display:flex;align-items:center;gap:10px}
+.tt small{display:block;margin-top:5px;font-size:.88rem;color:#e0e7ff}
+.cr{width:20px;height:28px;flex:none;filter:drop-shadow(0 2px 6px #0005)}
+.lgi{width:84px;height:84px;margin:0 auto 10px;display:block;object-fit:contain}
+@media(max-width:640px){.pm{display:none}.stat b{font-size:1.3rem;word-break:break-word}.uc button{white-space:nowrap}body.big{--th:80px}.top.big{padding:0 12px}.top.big .logo{width:50px;height:50px;border-radius:14px;font-size:.5rem}.tt h1{font-size:1.02rem;gap:6px}.cr{width:13px;height:19px}.tt small{font-size:.7rem;margin-top:3px}.top.big::after{right:70px;width:90px}.tl{gap:9px}.top.big .bg{width:34px;height:34px}.top.big .uc button{padding:6px 10px;font-size:.78rem}}
+
+.uc button{white-space:nowrap}
 
 </style>
 </head>
@@ -57,19 +71,19 @@ dialog{border:0;border-radius:20px;padding:0;width:min(520px,94vw);max-height:92
 const MEM=()=>DB.members.filter(m=>m.status!='Inactive'),DEP=()=>DB.depts.map(d=>d.name),mname=id=>(DB.members.find(m=>m.id==id)||{name:'Anonymous'}).name;
 const GT=['Tithe','Offering','Thanksgiving','Seed','Pledge payment','Building fund','Donation'],EC=['Utilities','Salaries','Maintenance','Equipment','Outreach','Welfare','Transport','Other'];
 const ym=d=>(d||'').slice(0,7),wa=(ph,msg)=>{let p=String(ph||'').replace(/[^\d]/g,'');if(p.startsWith('0'))p=(ST().cc||'233')+p.slice(1);return'https://wa.me/'+p+'?text='+encodeURIComponent(msg)};
-const APP={key:'church_ms',title:'Church Management System',icon:'⛪',
-sfields:[{k:'name',l:'Church name'},{k:'pastor',l:'Pastor / Overseer'},{k:'phone',l:'Church phone'},{k:'address',l:'Address'},{k:'cur',l:'Currency symbol'},{k:'cc',l:'Country code for WhatsApp (e.g. 233)'},{k:'services',l:'Service types (comma separated)'}],
+const APP={key:'church_ms',title:'Church Management System',icon:'⛪',big:1,migrate(){const s=ST();if(!s.curFix){if(s.cur=='GH₵')s.cur='₦';if(s.cc=='233')s.cc='234';s.curFix=1;save()}},
+sfields:[{k:'name',l:'Church name'},{k:'tagline',l:'Tagline (shown in the banner)'},{k:'pastor',l:'Pastor / Overseer'},{k:'phone',l:'Church phone'},{k:'address',l:'Address'},{k:'cur',l:'Currency symbol'},{k:'cc',l:'Country code for WhatsApp (234 = Nigeria)'},{k:'services',l:'Service types (comma separated)'}],
 seed(){const D=['Choir','Ushers','Youth','Children','Mens Fellowship'],N=[['John Mensah','Male'],['Grace Owusu','Female'],['Samuel Adu','Male'],['Ruth Boateng','Female'],['Daniel Kofi','Male'],['Esther Amoah','Female'],['Peter Asare','Male'],['Mary Tetteh','Female'],['Joy Nkrumah','Female'],['Isaac Darko','Male'],['Lydia Quaye','Female'],['Emmanuel Antwi','Male'],['Deborah Sarpong','Female'],['Joseph Frimpong','Male']];
- const t=new Date(),m0=t.getMonth()+1;const mem=N.map((n,i)=>({id:uid(),name:n[0],gender:n[1],dob:'199'+(i%10)+'-'+String(i<3?m0:(i%12)+1).padStart(2,'0')+'-'+String(5+i*2).padStart(2,'0'),phone:'024 100 00'+String(i+10),email:'',address:'Accra',dept:D[i%5],status:i==13?'Inactive':'Member',joined:'2022-0'+(i%9+1)+'-01',baptized:i%3?'Yes':'No'}));
+ const t=new Date(),m0=t.getMonth()+1;const mem=N.map((n,i)=>({id:uid(),name:n[0],gender:n[1],dob:'199'+(i%10)+'-'+String(i<3?m0:(i%12)+1).padStart(2,'0')+'-'+String(5+i*2).padStart(2,'0'),phone:'0803 100 00'+String(i+10),email:'',address:'Accra',dept:D[i%5],status:i==13?'Inactive':'Member',joined:'2022-0'+(i%9+1)+'-01',baptized:i%3?'Yes':'No'}));
  const sun=n=>{const d=new Date();d.setDate(d.getDate()-d.getDay()-7*n);return d.toISOString().slice(0,10)},att={};
  for(let n=0;n<6;n++){const ids={};mem.forEach((x,i)=>{if((i*7+n*3)%5!=0)ids[x.id]=1});att[sun(n)+'|Sunday Service']={ids,vis:2+n%3}}
  const dd=n=>{const d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)},cd=td().slice(0,8);
  const gv=[];mem.slice(0,10).forEach((x,i)=>{gv.push({id:uid(),date:cd+String(1+i).padStart(2,'0'),mid:x.id,type:'Tithe',amt:100+i*20,method:'Cash',note:''});if(i%2==0)gv.push({id:uid(),date:cd+String(1+i).padStart(2,'0'),mid:x.id,type:'Offering',amt:20+i*5,method:'Mobile Money',note:''})});
- return{settings:{name:'Grace Chapel International',pastor:'Pastor James Owusu',phone:'',address:'',cur:'GH₵',cc:'233',services:'Sunday Service,Midweek Service,Prayer Meeting,Youth Service'},
+ return{settings:{name:'Grace Chapel International',tagline:'Where faith meets community',pastor:'Pastor James Owusu',phone:'',address:'',cur:'₦',cc:'234',services:'Sunday Service,Midweek Service,Prayer Meeting,Youth Service'},
  members:mem,depts:D.map((d,i)=>({id:uid(),name:d,leader:mem[i].name,day:['Saturday 4pm','Sunday 8am','Friday 6pm','Sunday 9am','Saturday 7am'][i]})),att,giving:gv,
  expenses:[{id:uid(),date:cd+'03',cat:'Utilities',amt:180,note:'Electricity'},{id:uid(),date:cd+'05',cat:'Salaries',amt:600,note:'Church staff'},{id:uid(),date:cd+'07',cat:'Welfare',amt:120,note:'Support for needy members'}],
  events:[{id:uid(),title:'Annual Thanksgiving Service',date:dd(6),time:'09:00',venue:'Main Auditorium',note:''},{id:uid(),title:'Youth Camp',date:dd(14),time:'08:00',venue:'Retreat Centre',note:''},{id:uid(),title:'Prayer & Fasting',date:dd(3),time:'18:00',venue:'Church',note:''}],
- visitors:[{id:uid(),name:'Mr. Appiah',phone:'055 222 3311',date:sun(0),by:'Grace Owusu',status:'New',note:'Came with a friend'},{id:uid(),name:'Madam Serwaa',phone:'055 222 3322',date:sun(1),by:'John Mensah',status:'Contacted',note:''},{id:uid(),name:'Kelvin Ofori',phone:'055 222 3333',date:sun(2),by:'',status:'Visited',note:'Student, interested in youth'}],
+ visitors:[{id:uid(),name:'Mr. Appiah',phone:'0805 222 3311',date:sun(0),by:'Grace Owusu',status:'New',note:'Came with a friend'},{id:uid(),name:'Madam Serwaa',phone:'0805 222 3322',date:sun(1),by:'John Mensah',status:'Contacted',note:''},{id:uid(),name:'Kelvin Ofori',phone:'0805 222 3333',date:sun(2),by:'',status:'Visited',note:'Student, interested in youth'}],
  notices:[{id:uid(),title:'Sunday service times',date:td(),body:'First service 7:30am, second service 9:30am.'},{id:uid(),title:'Offering envelopes',date:td(),body:'New envelopes are available at the reception.'}]}},
 mods:[
 {id:'dash',i:'📊',l:'Dashboard',render:dash},
@@ -90,7 +104,7 @@ window.prof_=id=>{const m=DB.members.find(x=>x.id==id),keys=Object.keys(DB.att),
 function dash(el){const mo=ym(td()),inc=DB.giving.filter(g=>ym(g.date)==mo).reduce((a,g)=>a+g.amt,0),exp=DB.expenses.filter(g=>ym(g.date)==mo).reduce((a,g)=>a+g.amt,0),K=Object.keys(DB.att).sort(),last=K.slice(-6),L=DB.att[K[K.length-1]],bd=DB.members.filter(m=>m.dob&&m.dob.slice(5,7)==mo.slice(5)&&m.status!='Inactive').sort((a,b)=>a.dob.slice(8)-b.dob.slice(8));
  const byT={};DB.giving.filter(g=>ym(g.date)==mo).forEach(g=>byT[g.type]=(byT[g.type]||0)+g.amt);
  el.innerHTML=`<div class="grid">${stat('Members',MEM().length,'#7c3aed')}${stat('Last service',L?Object.keys(L.ids).length+L.vis:'–','#f59e0b')}${stat('Visitors (new)',DB.visitors.filter(v=>v.status=='New').length,'#ec4899')}${isAdmin()?stat('Income (month)',money(inc),'#10b981')+stat('Expenses (month)',money(exp),'#ef4444')+stat('Net',money(inc-exp),inc-exp>=0?'#10b981':'#ef4444'):''}</div>
- <div class="g2"><div class="card"><h3>Attendance, last services</h3>${cols(last.map(k=>({l:fdate(k).slice(0,6),v:Object.keys(DB.att[k].ids).length+DB.att[k].vis})))}</div>${isAdmin()?`<div class="card"><h3>Giving by type (this month)</h3>${bars(Object.entries(byT).map(([l,v])=>({l,v})),money)}</div>`:''}
+ <div class="g2"><div class="card"><h3>Attendance, last services</h3>${cols(last.map(k=>({l:fdate(k.split('|')[0]).slice(0,6),v:Object.keys(DB.att[k].ids).length+DB.att[k].vis})))}</div>${isAdmin()?`<div class="card"><h3>Giving by type (this month)</h3>${bars(Object.entries(byT).map(([l,v])=>({l,v})),money)}</div>`:''}
  <div class="card"><h3 style="margin-bottom:6px">Upcoming events</h3>${DB.events.filter(e=>e.date>=td()).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,5).map(e=>`<div class="li"><div><b>${esc(e.title)}</b><small>${esc(e.venue||'')} ${e.time||''}</small></div><span class="pill in">${fdate(e.date)}</span></div>`).join('')||'<div class="empty">No upcoming events</div>'}</div>
  <div class="card"><h3 style="margin-bottom:6px">Birthdays this month</h3>${bd.slice(0,6).map(m=>`<div class="li"><div><b>${esc(m.name)}</b><small>${m.dept||''}</small></div><span class="pill ${m.dob.slice(5)==td().slice(5)?'ok':''}">${fdate(m.dob).slice(0,6)}</span></div>`).join('')||'<div class="empty">None this month</div>'}</div>
  <div class="card"><h3 style="margin-bottom:6px">Visitors to follow up</h3>${DB.visitors.filter(v=>v.status=='New'||v.status=='Contacted').slice(0,5).map(v=>`<div class="li"><div><b>${esc(v.name)}</b><small>${esc(v.phone||'')}</small></div><span class="pill ${v.status=='New'?'bad':'wn'}">${v.status}</span></div>`).join('')||'<div class="empty">All followed up</div>'}</div>
@@ -128,22 +142,24 @@ const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slic
 const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
 let DB=ld(APP.key,null);if(!DB){DB=APP.seed();DB.users=[{id:'u1',name:'Administrator',u:'admin',p:'1234',role:'admin'}];DB.sample=1;localStorage.setItem(APP.key,JSON.stringify(DB))}
 const save=()=>localStorage.setItem(APP.key,JSON.stringify(DB)),ST=()=>DB.settings;
-const money=n=>(ST().cur||'$')+(+n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+const money=n=>(ST().cur||'$')+(+n||0).toLocaleString(undefined,{minimumFractionDigits:Number.isInteger(+n)?0:2,maximumFractionDigits:2});
 const fdate=d=>d?new Date(d+'T00:00').toLocaleDateString([],{day:'numeric',month:'short',year:'numeric'}):'';
 const sha=async s=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))].map(b=>b.toString(16).padStart(2,'0')).join('');
 function toast(m){const t=$('toast');t.textContent=m;t.className='show';setTimeout(()=>t.className='',2300)}
 let USER=ld('sess_'+APP.key,null),CUR=null;
 const isAdmin=()=>USER&&USER.role=='admin';
 /* ---------- shell ---------- */
-function boot(){if(!USER)return login();
- document.title=ST().name;$('app').innerHTML=`<div class="top"><h1><button class="bg" onclick="$('sd').classList.toggle('open')">☰</button>${APP.icon} ${esc(ST().name)}</h1><div class="uc"><span>${esc(USER.name)} · ${USER.role}</span><button onclick="logout()">Log out</button></div></div>
+const CROSS='<svg class="cr" viewBox="0 0 24 32"><defs><linearGradient id="gd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#f59e0b"/></linearGradient></defs><path d="M9 0h6v10h9v6h-9v16H9V16H0v-6h9z" fill="url(#gd)"/></svg>';
+function boot(){if(APP.migrate)APP.migrate();document.body.classList.toggle('big',!!APP.big);if(!USER)return login();
+ document.title=ST().name;const lg=ST().logo,uc=`<div class="uc"><span>${esc(USER.name)} · ${USER.role}</span><button onclick="logout()">Log out</button></div>`,burger=`<button class="bg" onclick="$('sd').classList.toggle('open')">☰</button>`;
+ $('app').innerHTML=(APP.big?`<div class="top big"><div class="tl">${burger}<div class="logo ${lg?'has':''}">${lg?`<img src="${lg}" alt="logo">`:'YOUR<br>LOGO'}</div><div class="tt"><h1>${CROSS}${esc(ST().name)}</h1><small>${esc(ST().tagline||'Where faith meets community')}${ST().pastor?'<span class="pm"> · '+esc(ST().pastor)+'</span>':''}</small></div></div>${uc}</div>`:`<div class="top"><h1>${burger}${APP.icon} ${esc(ST().name)}</h1>${uc}</div>`)+`
  <nav class="side" id="sd"></nav><main class="main" id="main"></main>
  <footer class="mq"><div class="mt">${Array(4).fill('<b>Ebene-Vento Technology</b> &nbsp;•&nbsp; '+esc(APP.title)+' &nbsp;•&nbsp; ').join('')}</div></footer>`;
  const mods=APP.mods.filter(m=>!m.admin||isAdmin());$('sd').innerHTML=mods.map(m=>`<button data-m="${m.id}" onclick="go('${m.id}')">${m.i} ${m.l}</button>`).join('');
  go(CUR&&mods.some(m=>m.id==CUR)?CUR:mods[0].id)}
 window.go=id=>{CUR=id;document.querySelectorAll('.side button').forEach(b=>b.classList.toggle('on',b.dataset.m==id));$('sd').classList.remove('open');const m=APP.mods.find(x=>x.id==id);$('main').innerHTML=`<h2 class="pt">${m.i} ${m.l}</h2><div id="mb"></div>`;m.render($('mb'));scrollTo(0,0)};
 const R=()=>go(CUR);
-function login(){$('app').innerHTML=`<div class="lg"><div class="card"><div style="font-size:2.4rem">${APP.icon}</div><h1>${esc(ST().name)}</h1><p style="color:var(--muted);margin-bottom:16px">${esc(APP.title)}</p><label>Username</label><input id="lu" autocapitalize="none"><br><label style="margin-top:10px">Password</label><input id="lp" type="password"><br><button class="btn" style="width:100%;margin-top:14px;padding:12px" id="lb">Log in</button>${DB.sample?'<div class="note" style="margin-top:14px">Demo login: <b>admin</b> / <b>1234</b>. Change it in Settings.</div>':''}<p style="text-align:center;margin-top:12px;font-size:.8rem;color:var(--muted)">Powered by Ebene-Vento Technology</p></div></div><div id="toast"></div>`;
+function login(){$('app').innerHTML=`<div class="lg"><div class="card">${APP.big?(ST().logo?`<img class="lgi" src="${ST().logo}" alt="logo">`:`<div style="text-align:center;margin-bottom:8px">${CROSS.replace('class="cr"','style="width:34px;height:46px"')}</div>`):`<div style="font-size:2.4rem">${APP.icon}</div>`}<h1>${esc(ST().name)}</h1><p style="color:var(--muted);margin-bottom:16px">${esc(APP.title)}</p><label>Username</label><input id="lu" autocapitalize="none"><br><label style="margin-top:10px">Password</label><input id="lp" type="password"><br><button class="btn" style="width:100%;margin-top:14px;padding:12px" id="lb">Log in</button>${DB.sample?'<div class="note" style="margin-top:14px">Demo login: <b>admin</b> / <b>1234</b>. Change it in Settings.</div>':''}<p style="text-align:center;margin-top:12px;font-size:.8rem;color:var(--muted)">Powered by Ebene-Vento Technology</p></div></div><div id="toast"></div>`;
  const go_=async()=>{const u=DB.users.find(x=>x.u.toLowerCase()==$('lu').value.trim().toLowerCase()),pw=$('lp').value;if(!u||!(u.h?await sha(pw)==u.h:u.p==pw)){toast('Wrong username or password');return}
   if(u.p){u.h=await sha(u.p);delete u.p;save()}USER={id:u.id,name:u.name,role:u.role};localStorage.setItem('sess_'+APP.key,JSON.stringify(USER));boot()};$('lb').onclick=go_;$('lp').onkeydown=e=>{if(e.key=='Enter')go_()}}
 function logout(){USER=null;localStorage.removeItem('sess_'+APP.key);login()}
@@ -173,7 +189,9 @@ function settings(el){const S=ST();
  el.innerHTML=`<div class="g2"><div class="card"><h3 style="margin-bottom:10px">General</h3>${APP.sfields.map(f=>`<div class="row"><div><label>${f.l}</label>${f.t=='select'?`<select data-s="${f.k}">${f.o.map(o=>`<option ${S[f.k]==o?'selected':''}>${o}</option>`).join('')}</select>`:`<input data-s="${f.k}" value="${esc(S[f.k]??'')}">`}</div></div>`).join('')}<button class="btn" id="ss">Save settings</button></div>
  <div class="card"><h3 style="margin-bottom:10px">My password</h3><div class="row"><div><label>New password (6+ characters)</label><input id="np" type="password"></div></div><button class="btn" id="sp">Change password</button></div></div>
  <div class="card"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><h3>Users &amp; roles</h3><button class="btn sm" id="ua">+ Add user</button></div><p class="note">Admin can see and change everything. Staff can work with daily records but cannot open Settings, Users or money reports.</p><div id="ul"></div></div>
+ ${APP.big?'<div class="card"><h3 style="margin-bottom:10px">Logo</h3><div class="row" style="align-items:center"><div style="flex:none;min-width:0"><div class="logo '+(S.logo?'has':'')+'" style="border-color:var(--line);color:var(--muted);background:var(--bg)">'+(S.logo?'<img src="'+S.logo+'">':'LOGO')+'</div></div><div><button class="btn" id="lu">Upload logo</button> <button class="btn o" id="lr">Remove</button></div></div><input type="file" id="lf" accept="image/*" style="display:none"><p class="note" style="margin:6px 0 0">A square image works best (PNG or JPG). It appears in the top banner and on the login page.</p></div>':''}
  <div class="card"><h3 style="margin-bottom:10px">Data</h3><div class="row"><button class="btn n" id="bk">Download backup</button><button class="btn n" id="rs">Restore backup</button><button class="btn r" id="er">Erase all data</button></div><input type="file" id="rf" accept=".json" style="display:none"><p class="note" style="margin:10px 0 0">Data is saved in this browser. Download a backup regularly. Login here is a convenience, not strong security; for a shared system use a server with proper accounts.</p></div>`;
+ if(APP.big){$('lu').onclick=()=>$('lf').click();$('lr').onclick=()=>{delete S.logo;save();toast('Logo removed');boot()};$('lf').onchange=ev=>{const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,260/Math.max(im.width,im.height)),cv=document.createElement('canvas');cv.width=Math.round(im.width*k);cv.height=Math.round(im.height*k);cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);S.logo=cv.toDataURL('image/png');save();toast('Logo saved');boot()};im.onerror=()=>toast('Could not read that image');im.src=r.result};r.readAsDataURL(f)}}
  $('ss').onclick=()=>{document.querySelectorAll('[data-s]').forEach(i=>S[i.dataset.s]=i.value);save();toast('Settings saved');boot()};
  $('sp').onclick=async()=>{const p=$('np').value;if(p.length<6){toast('Use 6+ characters');return}DB.users.find(u=>u.id==USER.id).h=await sha(p);delete DB.users.find(u=>u.id==USER.id).p;DB.sample=0;save();$('np').value='';toast('Password changed')};
  const ul=()=>{$('ul').innerHTML=DB.users.map(u=>`<div class="li"><div><b>${esc(u.name)}</b><small>@${esc(u.u)}</small></div><span class="pill ${u.role=='admin'?'in':''}">${u.role}</span>${u.id==USER.id?'':`<button class="btn sm r" onclick="du_('${u.id}')">✕</button>`}</div>`).join('')};ul();
